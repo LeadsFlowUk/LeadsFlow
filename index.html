@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LeadFlow — Connect Customers to Businesses</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #0a0a0a;
+    --white: #f5f4f0;
+    --accent: #c8f542;
+    --accent2: #1a1a1a;
+    --grey: #888;
+    --light: #efefeb;
+    --border: rgba(0,0,0,0.1);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--white);
+    color: var(--black);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.2rem 3rem;
+    background: rgba(245,244,240,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 1.3rem; letter-spacing: -0.02em;
+  }
+  .logo span { color: var(--black); background: var(--accent); padding: 0 4px; }
+  nav ul { list-style: none; display: flex; gap: 2rem; }
+  nav ul a { text-decoration: none; color: var(--black); font-size: 0.9rem; font-weight: 500; opacity: 0.7; transition: opacity 0.2s; }
+  nav ul a:hover { opacity: 1; }
+  .nav-cta {
+    background: var(--black); color: var(--white);
+    padding: 0.6rem 1.4rem; border-radius: 100px;
+    font-size: 0.85rem; font-weight: 600;
+    text-decoration: none; transition: background 0.2s, transform 0.2s;
+  }
+  .nav-cta:hover { background: var(--accent); color: var(--black); transform: translateY(-1px); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding: 7rem 3rem 4rem;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background: radial-gradient(ellipse 60% 60% at 80% 50%, rgba(200,245,66,0.18) 0%, transparent 70%);
+  }
+  .hero-grid {
+    position: absolute; inset: 0; z-index: 0;
+    background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.5;
+  }
+  .hero-inner {
+    position: relative; z-index: 1;
+    max-width: 1200px; margin: 0 auto; width: 100%;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+  }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--accent); color: var(--black);
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.35rem 0.9rem; border-radius: 100px; margin-bottom: 1.5rem;
+  }
+  .hero-tag::before { content: '●'; font-size: 0.5rem; animation: blink 1.5s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(2.8rem, 5vw, 4.5rem);
+    font-weight: 800; line-height: 1.05;
+    letter-spacing: -0.03em; margin-bottom: 1.5rem;
+  }
+  h1 em { font-style: normal; position: relative; display: inline-block; }
+  h1 em::after {
+    content: ''; position: absolute; bottom: 4px; left: 0; right: 0; height: 8px;
+    background: var(--accent); z-index: -1; transform: skewX(-3deg);
+  }
+  .hero-sub {
+    font-size: 1.05rem; line-height: 1.7; color: #444;
+    max-width: 460px; margin-bottom: 2.5rem; font-weight: 300;
+  }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--black); color: var(--white);
+    padding: 0.9rem 2rem; border-radius: 100px;
+    font-size: 0.95rem; font-weight: 600; text-decoration: none;
+    transition: all 0.25s; border: 2px solid var(--black);
+    display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-primary:hover { background: var(--accent); color: var(--black); border-color: var(--accent); transform: translateY(-2px); }
+  .btn-secondary {
+    background: transparent; color: var(--black);
+    padding: 0.9rem 2rem; border-radius: 100px;
+    font-size: 0.95rem; font-weight: 600; text-decoration: none;
+    transition: all 0.25s; border: 2px solid var(--black);
+  }
+  .btn-secondary:hover { background: var(--black); color: var(--white); transform: translateY(-2px); }
+
+  .hero-stats {
+    display: flex; gap: 2rem; margin-top: 3rem; padding-top: 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .stat-num {
+    font-family: 'Syne', sans-serif; font-size: 1.8rem; font-weight: 800; line-height: 1;
+  }
+  .stat-label { font-size: 0.8rem; color: var(--grey); margin-top: 0.2rem; }
+
+  /* HERO CARD */
+  .hero-card {
+    background: var(--black); color: var(--white);
+    border-radius: 24px; padding: 2.5rem;
+    position: relative; overflow: hidden;
+    animation: floatCard 4s ease-in-out infinite;
+  }
+  @keyframes floatCard { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .hero-card::before {
+    content: ''; position: absolute; top: -40px; right: -40px;
+    width: 160px; height: 160px; border-radius: 50%;
+    background: var(--accent); opacity: 0.12;
+  }
+  .card-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.5; margin-bottom: 1.2rem; }
+  .card-title { font-family: 'Syne', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 1.5rem; }
+  .card-form-field {
+    background: rgba(255,255,255,0.08); border-radius: 10px;
+    padding: 0.8rem 1rem; margin-bottom: 0.8rem;
+    font-size: 0.85rem; opacity: 0.7;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .card-form-field .icon { font-size: 0.9rem; }
+  .card-btn {
+    width: 100%; background: var(--accent); color: var(--black);
+    border: none; padding: 0.9rem; border-radius: 10px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem;
+    margin-top: 0.5rem; cursor: pointer; transition: transform 0.2s;
+  }
+  .card-btn:hover { transform: scale(1.02); }
+  .card-footer {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 1.2rem; padding-top: 1.2rem; border-top: 1px solid rgba(255,255,255,0.1);
+    font-size: 0.78rem; opacity: 0.5;
+  }
+  .card-badge {
+    background: rgba(200,245,66,0.15); color: var(--accent);
+    padding: 0.25rem 0.7rem; border-radius: 100px; font-size: 0.72rem; font-weight: 600;
+  }
+
+  /* SECTION SHARED */
+  section { padding: 6rem 3rem; }
+  .section-inner { max-width: 1200px; margin: 0 auto; }
+  .section-tag {
+    font-size: 0.75rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--grey); margin-bottom: 1rem;
+  }
+  h2 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(2rem, 3.5vw, 3rem); line-height: 1.1;
+    letter-spacing: -0.03em; margin-bottom: 1rem;
+  }
+
+  /* HOW IT WORKS */
+  .how { background: var(--light); }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; margin-top: 3.5rem; }
+  .step {
+    background: var(--white); border-radius: 20px; padding: 2rem;
+    border: 1px solid var(--border); position: relative;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .step:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.08); }
+  .step-num {
+    font-family: 'Syne', sans-serif; font-size: 3rem; font-weight: 800;
+    color: var(--accent); line-height: 1; margin-bottom: 1rem;
+  }
+  .step h3 { font-family: 'Syne', sans-serif; font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; }
+  .step p { font-size: 0.9rem; line-height: 1.6; color: #555; }
+
+  /* LEAD FORM */
+  .lead-form-section { background: var(--white); }
+  .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-top: 3rem; }
+  .form-desc { font-size: 1rem; line-height: 1.7; color: #555; margin-bottom: 2rem; font-weight: 300; }
+  .form-perks { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+  .form-perks li {
+    display: flex; align-items: center; gap: 0.7rem;
+    font-size: 0.9rem; color: #333;
+  }
+  .form-perks li::before { content: '✓'; background: var(--accent); color: var(--black); width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; font-size: 0.7rem; font-weight: 700; flex-shrink: 0; }
+
+  form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  label { font-size: 0.8rem; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 0.3rem; display: block; }
+  input, select, textarea {
+    width: 100%; padding: 0.85rem 1.1rem;
+    border: 1.5px solid var(--border); border-radius: 10px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+    background: var(--white); color: var(--black);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--black);
+    box-shadow: 0 0 0 3px rgba(200,245,66,0.3);
+  }
+  textarea { resize: vertical; min-height: 100px; }
+  .form-submit {
+    background: var(--black); color: var(--white);
+    border: none; padding: 1rem; border-radius: 10px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+    cursor: pointer; transition: all 0.25s; margin-top: 0.5rem;
+  }
+  .form-submit:hover { background: var(--accent); color: var(--black); transform: translateY(-2px); }
+  .form-note { font-size: 0.78rem; color: var(--grey); text-align: center; margin-top: 0.5rem; }
+
+  /* SUCCESS MSG */
+  .success-msg {
+    display: none; background: var(--accent); color: var(--black);
+    padding: 1.2rem; border-radius: 10px; text-align: center;
+    font-family: 'Syne', sans-serif; font-weight: 700;
+  }
+
+  /* FOR BUSINESSES */
+  .for-biz { background: var(--black); color: var(--white); }
+  .for-biz .section-tag { color: var(--accent); }
+  .for-biz h2 { color: var(--white); }
+  .biz-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 3rem; }
+  .biz-card {
+    border: 1px solid rgba(255,255,255,0.1); border-radius: 20px;
+    padding: 1.8rem; transition: border-color 0.3s, transform 0.3s;
+  }
+  .biz-card:hover { border-color: var(--accent); transform: translateY(-4px); }
+  .biz-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .biz-card h3 { font-family: 'Syne', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .biz-card p { font-size: 0.85rem; line-height: 1.6; opacity: 0.6; }
+  .biz-cta { margin-top: 3rem; text-align: center; }
+  .btn-accent {
+    background: var(--accent); color: var(--black);
+    padding: 1rem 2.5rem; border-radius: 100px;
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 1rem;
+    text-decoration: none; transition: all 0.25s; display: inline-block;
+  }
+  .btn-accent:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(200,245,66,0.3); }
+
+  /* FOOTER */
+  footer {
+    background: var(--white); border-top: 1px solid var(--border);
+    padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center;
+  }
+  footer p { font-size: 0.85rem; color: var(--grey); }
+
+  /* ANIMATIONS */
+  .fade-up { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { display: none; }
+    .hero { padding: 6rem 1.5rem 3rem; }
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-card { display: none; }
+    section { padding: 4rem 1.5rem; }
+    .steps, .biz-grid { grid-template-columns: 1fr; }
+    .form-grid, .form-row { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Lead<span>Flow</span></div>
+  <ul>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#get-lead">Get leads</a></li>
+    <li><a href="#businesses">For businesses</a></li>
+  </ul>
+  <a href="#businesses" class="nav-cta">Partner with us →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-tag">Now live</div>
+      <h1>We connect customers to the <em>right</em> business</h1>
+      <p class="hero-sub">LeadFlow captures high-intent customers and delivers them directly to verified businesses — so you only pay for real opportunities, not ads.</p>
+      <div class="hero-btns">
+        <a href="#get-lead" class="btn-primary">I need a service →</a>
+        <a href="#businesses" class="btn-secondary">I'm a business</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">500+</div>
+          <div class="stat-label">Businesses ready</div>
+        </div>
+        <div>
+          <div class="stat-num">98%</div>
+          <div class="stat-label">Match rate</div>
+        </div>
+        <div>
+          <div class="stat-num">24h</div>
+          <div class="stat-label">Average response</div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="card-label">New lead request</div>
+      <div class="card-title">Looking for a reliable plumber in London</div>
+      <div class="card-form-field"><span class="icon">📍</span> London, UK</div>
+      <div class="card-form-field"><span class="icon">🔧</span> Plumbing · Emergency fix</div>
+      <div class="card-form-field"><span class="icon">💰</span> Budget: £100–£300</div>
+      <button class="card-btn">Send to 3 matched businesses</button>
+      <div class="card-footer">
+        <span>Sent securely</span>
+        <span class="card-badge">● 3 matches found</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="section-inner">
+    <div class="section-tag">The process</div>
+    <h2>Simple for customers.<br>Powerful for businesses.</h2>
+    <div class="steps">
+      <div class="step fade-up">
+        <div class="step-num">01</div>
+        <h3>Customer submits a request</h3>
+        <p>A customer fills in a short form describing what they need, their location, and budget. Takes under 2 minutes.</p>
+      </div>
+      <div class="step fade-up" style="transition-delay:0.15s">
+        <div class="step-num">02</div>
+        <h3>We match & deliver the lead</h3>
+        <p>Our system matches the request to the best-fit businesses and delivers the lead directly to their inbox in real time.</p>
+      </div>
+      <div class="step fade-up" style="transition-delay:0.3s">
+        <div class="step-num">03</div>
+        <h3>Business wins the job</h3>
+        <p>The business follows up, wins the customer, and only pays for the lead — no wasted ad spend, no guesswork.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEAD FORM -->
+<section class="lead-form-section" id="get-lead">
+  <div class="section-inner">
+    <div class="form-grid">
+      <div class="fade-up">
+        <div class="section-tag">For customers</div>
+        <h2>Tell us what you need</h2>
+        <p class="form-desc">Fill in your request below and we'll match you with the best local businesses — for free. No spam, no hassle.</p>
+        <ul class="form-perks">
+          <li>Matched with verified businesses only</li>
+          <li>Completely free for customers</li>
+          <li>Businesses compete for your job</li>
+          <li>Hear back within 24 hours</li>
+        </ul>
+      </div>
+      <div class="fade-up" style="transition-delay:0.2s">
+        <form id="leadForm">
+          <div class="form-row">
+            <div>
+              <label>First name</label>
+              <input type="text" placeholder="Alex" required>
+            </div>
+            <div>
+              <label>Last name</label>
+              <input type="text" placeholder="Johnson" required>
+            </div>
+          </div>
+          <div>
+            <label>Email address</label>
+            <input type="email" placeholder="alex@email.com" required>
+          </div>
+          <div>
+            <label>Phone number</label>
+            <input type="tel" placeholder="+44 7700 000000">
+          </div>
+          <div>
+            <label>What service do you need?</label>
+            <select required>
+              <option value="" disabled selected>Select a category</option>
+              <option>Home & Repairs</option>
+              <option>Cleaning</option>
+              <option>Legal & Finance</option>
+              <option>Health & Wellness</option>
+              <option>Education & Tutoring</option>
+              <option>Tech & IT Support</option>
+              <option>Events & Entertainment</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div>
+            <label>Your location</label>
+            <input type="text" placeholder="City or postcode" required>
+          </div>
+          <div>
+            <label>Describe what you need</label>
+            <textarea placeholder="Give us a bit of detail — the more you share, the better the match!"></textarea>
+          </div>
+          <button type="submit" class="form-submit">Find me the best businesses →</button>
+          <p class="form-note">🔒 Your info is never sold. Only matched businesses see your request.</p>
+        </form>
+        <div class="success-msg" id="successMsg">🎉 Request sent! Matched businesses will contact you within 24 hours.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOR BUSINESSES -->
+<section class="for-biz" id="businesses">
+  <div class="section-inner">
+    <div class="section-tag">For businesses</div>
+    <h2>Stop guessing.<br>Start closing.</h2>
+    <div class="biz-grid">
+      <div class="biz-card fade-up">
+        <div class="biz-icon">🎯</div>
+        <h3>High-intent leads only</h3>
+        <p>Every lead is from a real person actively looking for a service right now — not someone who clicked an ad by accident.</p>
+      </div>
+      <div class="biz-card fade-up" style="transition-delay:0.15s">
+        <div class="biz-icon">💸</div>
+        <h3>Pay per lead, not per click</h3>
+        <p>No monthly ad budgets. No wasted spend. You only pay when we send you a real customer request.</p>
+      </div>
+      <div class="biz-card fade-up" style="transition-delay:0.3s">
+        <div class="biz-icon">⚡</div>
+        <h3>Instant delivery</h3>
+        <p>Leads land in your inbox the second they're submitted. Be the first to follow up and win the job.</p>
+      </div>
+    </div>
+    <div class="biz-cta fade-up">
+      <a href="mailto:partner@leadflow.com" class="btn-accent">Get started as a business partner →</a>
+      <p style="margin-top:1rem; font-size:0.85rem; opacity:0.5;">Email us and we'll set you up within 24 hours</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">Lead<span>Flow</span></div>
+  <p>© 2026 LeadFlow. All rights reserved.</p>
+  <p style="font-size:0.8rem;">Made to connect people with great businesses.</p>
+</footer>
+
+<script>
+  // Form submit
+  document.getElementById('leadForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    this.style.display = 'none';
+    document.getElementById('successMsg').style.display = 'block';
+  });
+
+  // Fade-up on scroll
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
