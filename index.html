@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>LeadsFlow — Takeaway Content</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Georgia,serif;background:#1A1208;color:#FFF8F0;overflow-x:hidden}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2rem;background:rgba(26,18,8,0.95);border-bottom:1px solid rgba(255,184,0,0.2)}
+.logo{font-size:1.6rem;font-weight:bold;color:#FFB800;letter-spacing:2px;text-decoration:none}
+.logo span{color:#FF4500}
+.nav-cta{background:#FF4500;color:#fff;padding:0.6rem 1.4rem;border-radius:4px;text-decoration:none;font-size:0.85rem;font-weight:bold;letter-spacing:1px}
+
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:8rem 1.5rem 4rem;background:radial-gradient(ellipse 80% 60% at 50% 80%,rgba(255,69,0,0.25) 0%,transparent 65%),#1A1208}
+.hero-badge{display:inline-block;background:rgba(255,184,0,0.15);border:1px solid rgba(255,184,0,0.4);color:#FFB800;font-size:0.75rem;letter-spacing:3px;text-transform:uppercase;padding:0.4rem 1.2rem;border-radius:2px;margin-bottom:2rem}
+.hero h1{font-size:clamp(3rem,12vw,7rem);line-height:1;color:#FFF8F0;margin-bottom:1.5rem}
+.hero h1 em{font-style:normal;color:#FF4500;display:block}
+.hero p{font-size:1rem;line-height:1.8;color:rgba(255,248,240,0.65);max-width:520px;margin:0 auto 2.5rem}
+.btn-primary{display:inline-block;background:#FF4500;color:#fff;padding:1rem 2.5rem;border-radius:4px;text-decoration:none;font-size:0.9rem;font-weight:bold;letter-spacing:1px;margin:0.5rem}
+.btn-sec{display:inline-block;background:transparent;color:#FFF8F0;padding:1rem 2.2rem;border-radius:4px;border:1px solid rgba(255,248,240,0.25);text-decoration:none;font-size:0.9rem;font-weight:bold;letter-spacing:1px;margin:0.5rem}
+.stats{display:flex;gap:2.5rem;justify-content:center;flex-wrap:wrap;margin-top:3.5rem;padding-top:3rem;border-top:1px solid rgba(255,248,240,0.08)}
+.stat-num{font-size:2.5rem;font-weight:bold;color:#FFB800;line-height:1}
+.stat-label{font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:#6B5E4E;margin-top:0.3rem}
+
+section{padding:5rem 1.5rem}
+.inner{max-width:1000px;margin:0 auto}
+.inner-sm{max-width:760px;margin:0 auto}
+.section-label{font-size:0.7rem;letter-spacing:3px;text-transform:uppercase;color:#FF4500;margin-bottom:1rem}
+.section-title{font-size:clamp(2rem,5vw,3.5rem);font-weight:bold;line-height:1.05;color:#FFF8F0;margin-bottom:0.5rem}
+.section-title em{font-style:normal;color:#FFB800}
+
+.why{background:#2D2416}
+.grid-4{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2px;margin-top:3rem;border:1px solid rgba(255,184,0,0.1)}
+.card{background:#1A1208;padding:2.2rem 1.8rem}
+.card-icon{font-size:2rem;margin-bottom:1rem;display:block}
+.card h3{font-size:1.2rem;color:#FFF8F0;margin-bottom:0.7rem;font-weight:bold}
+.card p{font-size:0.88rem;line-height:1.75;color:#6B5E4E}
+
+.steps{margin-top:3rem}
+.step{display:grid;grid-template-columns:50px 1fr;gap:1.5rem;align-items:start;padding:2rem 0;border-bottom:1px solid rgba(255,248,240,0.07)}
+.step:last-child{border-bottom:none}
+.step-num{font-size:2.5rem;font-weight:bold;color:#FF4500;opacity:0.5;line-height:1}
+.step h3{font-size:1.2rem;color:#FFF8F0;margin-bottom:0.5rem;font-weight:bold}
+.step p{font-size:0.88rem;line-height:1.75;color:#6B5E4E}
+
+.what{background:#2D2416}
+.grid-3{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.2rem;margin-top:3rem}
+.wcard{background:rgba(255,248,240,0.03);border:1px solid rgba(255,248,240,0.08);border-radius:4px;padding:2rem}
+.wcard .tag{display:inline-block;background:rgba(255,69,0,0.2);color:#FF4500;font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;padding:0.3rem 0.7rem;border-radius:2px;margin-bottom:1rem}
+.wcard h3{font-size:1.1rem;color:#FFF8F0;margin-bottom:0.5rem;font-weight:bold}
+.wcard p{font-size:0.85rem;line-height:1.7;color:#6B5E4E}
+
+.booking{background:radial-gradient(ellipse 60% 70% at 90% 50%,rgba(255,69,0,0.1) 0%,transparent 60%),#1A1208}
+.booking-header{text-align:center;margin-bottom:3rem}
+.booking-header p{color:#6B5E4E;font-size:0.95rem;line-height:1.7;margin-top:1rem;max-width:540px;margin-left:auto;margin-right:auto}
+form{background:rgba(255,248,240,0.03);border:1px solid rgba(255,248,240,0.1);border-radius:6px;padding:2.5rem 2rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.fg{display:flex;flex-direction:column;gap:0.45rem;margin-bottom:1.3rem}
+.fg label{font-size:0.68rem;letter-spacing:2px;text-transform:uppercase;color:#6B5E4E}
+.fg input,.fg select,.fg textarea{background:rgba(255,248,240,0.05);border:1px solid rgba(255,248,240,0.12);border-radius:3px;color:#FFF8F0;font-family:Georgia,serif;font-size:0.9rem;padding:0.8rem 1rem;outline:none;width:100%;transition:border-color 0.2s}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:#FF4500}
+.fg input::placeholder,.fg textarea::placeholder{color:rgba(255,248,240,0.2)}
+.fg select option{background:#2D2416}
+.fg textarea{resize:vertical;min-height:100px}
+.divider{border:none;border-top:1px solid rgba(255,248,240,0.07);margin:1.5rem 0}
+.flabel{font-size:0.65rem;letter-spacing:2px;text-transform:uppercase;color:#FF4500;display:block;margin-bottom:1rem}
+.checks{display:flex;flex-direction:column;gap:0.7rem}
+.check{display:flex;align-items:center;gap:0.7rem;cursor:pointer}
+.check input{accent-color:#FF4500;width:15px;height:15px}
+.check span{font-size:0.88rem;color:rgba(255,248,240,0.7)}
+.submit-btn{width:100%;background:#FF4500;color:#fff;padding:1.1rem;font-family:Georgia,serif;font-size:0.9rem;font-weight:bold;letter-spacing:2px;text-transform:uppercase;border:none;border-radius:3px;cursor:pointer;margin-top:2rem}
+.form-note{text-align:center;font-size:0.75rem;color:#6B5E4E;margin-top:0.8rem}
+.success{display:none;background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.3);border-radius:4px;padding:2.5rem;text-align:center;margin-top:1.5rem}
+.success h3{font-size:1.8rem;color:#FFB800;margin-bottom:0.5rem}
+.success p{color:#6B5E4E;font-size:0.9rem}
+
+footer{background:#2D2416;border-top:1px solid rgba(255,248,240,0.06);padding:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+footer p{font-size:0.78rem;color:#6B5E4E}
+
+@media(max-width:620px){.form-row{grid-template-columns:1fr}form{padding:1.5rem 1rem}}
+</style>
+
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="#">Leads<span>Flow</span></a>
+  <a class="nav-cta" href="#book">Book a Shoot</a>
+</nav>
+
+<section class="hero">
+  <div>
+    <span class="hero-badge">🎥 Takeaway Content Specialists</span>
+    <h1>Your Food,<br><em>Filmed Right.</em></h1>
+    <p>I come to your takeaway, film your best dishes, and create short-form content that pulls hungry customers through your door — not just onto your page.</p>
+    <a href="#book" class="btn-primary">Book a Free Consultation →</a>
+    <a href="#how" class="btn-sec">See How It Works</a>
+    <div class="stats">
+      <div class="stat"><div class="stat-num">50+</div><div class="stat-label">Takeaways Filmed</div></div>
+      <div class="stat"><div class="stat-num">3M+</div><div class="stat-label">Views Generated</div></div>
+      <div class="stat"><div class="stat-num">24h</div><div class="stat-label">Turnaround</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="why" id="why">
+  <div class="inner">
+    <p class="section-label">Why it matters</p>
+    <h2 class="section-title">Customers eat with their <em>eyes first.</em></h2>
+    <div class="grid-4">
+      <div class="card"><span class="card-icon">🍔</span><h3>Scroll-stopping visuals</h3><p>Bad photos cost you orders every day. Steaming, saucy, cinematic shots of your food make people stop scrolling and start ordering.</p></div>
+      <div class="card"><span class="card-icon">📱</span><h3>Built for Reels & TikTok</h3><p>Every clip is cut for vertical short-form. Content that lives where your customers already spend their time.</p></div>
+      <div class="card"><span class="card-icon">📍</span><h3>I come to you</h3><p>No studio. No hassle. I show up with my kit, film during your service or prep, and leave with everything I need.</p></div>
+      <div class="card"><span class="card-icon">🔥</span><h3>Content that converts</h3><p>Every video is made to make people hungry and curious. The goal isn't views — it's orders through your door.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="inner-sm">
+    <p class="section-label">The process</p>
+    <h2 class="section-title">Simple. Fast.<br><em>Effective.</em></h2>
+    <div class="steps">
+      <div class="step"><div class="step-num">01</div><div><h3>Fill in the form below</h3><p>Tell me about your takeaway — what you sell, where you are, and when works for you. Takes under two minutes.</p></div></div>
+      <div class="step"><div class="step-num">02</div><div><h3>We arrange your shoot</h3><p>I'll reach out within 24 hours to confirm a date and time. I'll plan shots around your best-selling dishes.</p></div></div>
+      <div class="step"><div class="step-num">03</div><div><h3>I come and film</h3><p>I arrive with a full kit — camera, lighting, props — and film your food. Most shoots take 1–2 hours.</p></div></div>
+      <div class="step"><div class="step-num">04</div><div><h3>You get ready-to-post content</h3><p>Edited videos and photos land in your inbox within 24 hours, formatted and ready to post.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="what" id="what">
+  <div class="inner">
+    <p class="section-label">What's included</p>
+    <h2 class="section-title">Every shoot includes <em>everything.</em></h2>
+    <div class="grid-3">
+      <div class="wcard"><span class="tag">Video</span><h3>Short-form Reels & TikToks</h3><p>Edited vertical videos of your food in action — sizzling, pouring, being plated. Hook-first formats that get watched.</p></div>
+      <div class="wcard"><span class="tag">Photos</span><h3>High-res dish shots</h3><p>Clean, drool-worthy still images of your top dishes for your menu, Google profile, and social grid.</p></div>
+      <div class="wcard"><span class="tag">Branding</span><h3>Captions & covers</h3><p>Every piece comes with a suggested caption and optimised cover frame so you can post with zero effort.</p></div>
+      <div class="wcard"><span class="tag">Strategy</span><h3>Posting tips & timing</h3><p>I'll tell you exactly when and how to post each piece for maximum reach in your local area.</p></div>
+      <div class="wcard"><span class="tag">Bonus</span><h3>Google & Deliveroo assets</h3><p>Images formatted for Google Business, Just Eat, Uber Eats, or Deliveroo — ready to upload straight away.</p></div>
+      <div class="wcard"><span class="tag">Ongoing</span><h3>Monthly packages</h3><p>Need regular content? Monthly packages keep your socials fresh without you lifting a finger.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="booking" id="book">
+  <div class="inner-sm">
+    <div class="booking-header">
+      <p class="section-label">Book your shoot</p>
+      <h2 class="section-title">Let's make your food <em>unmissable.</em></h2>
+      <p>Fill in the form and I'll be in touch within 24 hours to arrange a time that works for you. No obligation — just a quick chat first.</p>
+    </div>
+    <form id="bookingForm">
+      <span class="flabel">Your details</span>
+      <div class="form-row">
+        <div class="fg"><label>First name *</label><input type="text" placeholder="e.g. Omar" required/></div>
+        <div class="fg"><label>Last name *</label><input type="text" placeholder="e.g. Khan" required/></div>
+      </div>
+      <div class="form-row">
+        <div class="fg"><label>Email address *</label><input type="email" placeholder="you@example.com" required/></div>
+        <div class="fg"><label>Phone number *</label><input type="tel" placeholder="+44 7700 000000" required/></div>
+      </div>
+      <hr class="divider"/>
+      <span class="flabel">About your takeaway</span>
+      <div class="form-row">
+        <div class="fg"><label>Takeaway name *</label><input type="text" placeholder="e.g. The Burger Lab" required/></div>
+        <div class="fg"><label>Type of cuisine *</label>
+          <select required><option value="" disabled selected>Select…</option><option>Burgers & American</option><option>Pizza</option><option>Chicken / Fried chicken</option><option>Indian / Bangladeshi</option><option>Chinese</option><option>Turkish / Kebab</option><option>Caribbean</option><option>Mexican</option><option>Fish & Chips</option><option>Sushi / Japanese</option><option>Other</option></select>
+        </div>
+      </div>
+      <div class="fg"><label>Takeaway address *</label><input type="text" placeholder="e.g. 12 High Street, Manchester, M1 2AB" required/></div>
+      <div class="fg"><label>Where do you want to post the content?</label>
+        <div class="checks">
+          <label class="check"><input type="checkbox"/><span>Instagram Reels</span></label>
+          <label class="check"><input type="checkbox"/><span>TikTok</span></label>
+          <label class="check"><input type="checkbox"/><span>Facebook</span></label>
+          <label class="check"><input type="checkbox"/><span>Google Business / Maps</span></label>
+          <label class="check"><input type="checkbox"/><span>Deliveroo / Just Eat / Uber Eats</span></label>
+        </div>
+      </div>
+      <hr class="divider"/>
+      <span class="flabel">Scheduling</span>
+      <div class="form-row">
+        <div class="fg"><label>Preferred date *</label><input type="date" id="pdate" required/></div>
+        <div class="fg"><label>Best time of day</label>
+          <select><option value="">No preference</option><option>Morning (before 12pm)</option><option>Lunch (12pm – 2pm)</option><option>Afternoon (2pm – 5pm)</option><option>Evening service (5pm+)</option></select>
+        </div>
+      </div>
+      <div class="fg"><label>Anything else I should know?</label><textarea placeholder="Signature dishes, social handles, access info…"></textarea></div>
+      <button type="submit" class="submit-btn">Book My Shoot →</button>
+      <p class="form-note">🔒 Your details are never shared. Only used to arrange your shoot.</p>
+    </form>
+    <div class="success" id="successMsg">
+      <h3>🎬 You're booked in!</h3>
+      <p>I'll be in touch within 24 hours to confirm your shoot date. Check your inbox — see you soon!</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a class="logo" href="#">Leads<span>Flow</span></a>
+  <p>© 2026 LeadsFlow. Takeaway content that converts.</p>
+</footer>
+
+<script>
+document.getElementById('bookingForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  this.style.display='none';
+  document.getElementById('successMsg').style.display='block';
+  window.scrollTo({top:document.getElementById('successMsg').offsetTop-100,behavior:'smooth'});
+});
+document.getElementById('pdate').setAttribute('min',new Date().toISOString().split('T')[0]);
+</script>
+
+</body>
+</html>
